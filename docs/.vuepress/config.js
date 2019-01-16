@@ -10,10 +10,16 @@ module.exports = {
 			{
 				text: '前端',
 				items: [
-          			{ text: 'HTML', link: '/web/HTML' },
+          			//{ text: 'HTML', link: '/web/HTML' },
           			{ text: 'CSS', link: '/web/CSS' },
 					{ text: 'JAVASCRIPT', link: '/web/JAVASCRIPT' }
         		]
+			},
+			{
+				text: '后端',
+				items: [
+					{ text: 'node', link: '/backEnd/node' },
+				]
 			},
 			{
 				text: '工具',
@@ -25,7 +31,7 @@ module.exports = {
 				text: '服务器',
 				items: [
           			{ text: 'nginx', link: '/server/nginx' },
-          			{ text: 'linux', link: '/server/linux' },
+          			//{ text: 'linux', link: '/server/linux' },
           			{ text: 'mysql', link: '/server/mysql' }
         		]
 			},

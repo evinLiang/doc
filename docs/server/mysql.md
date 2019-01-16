@@ -11,9 +11,6 @@ mkdir mysql
 cd mysql
 ```
 
-之后按照这个操作
-https://www.cnblogs.com/julyme/p/5969626.html
-
 #### 1. 下载mysql的repo源
 
 ```bash
@@ -44,8 +41,9 @@ sudo yum install mysql-server
 ```bash
 mysql -u root
 ```
+::: danger
 登录时有可能报这样的错：ERROR 2002 (HY000): Can‘t connect to local MySQL server through socket ‘/var/lib/mysql/mysql.sock‘ (2)，原因是/var/lib/mysql的访问权限问题。下面的命令把/var/lib/mysql的拥有者改为当前用户：
-
+:::
 ```bash
 sudo chown -R openscanner:openscanner /var/lib/mysql
 ```
@@ -104,7 +102,6 @@ mysql> select host, user, password from user;
 ```
 
 #### 修改权限
-https://www.cnblogs.com/weifeng1463/p/7941625.html
 1、登陆mysql数据库    
 ```sql
 mysql -u root -p
@@ -125,7 +122,7 @@ mysql> select host,user,password from user;
 ```
 可以看到在user表中已创建的root用户。host字段表示登录的主机，其值可以用IP，也可用主机名，
 
-   (1)有时想用本地IP登录，那么可以将以上的Host值改为自己的Ip即可。
+   有时想用本地IP登录，那么可以将以上的Host值改为自己的Ip即可。
 
 2、实现远程连接(授权法)
 
@@ -169,7 +166,6 @@ update user set host = '%' where user = 'root';
 这样在远端就可以通过root用户访问Mysql.
 
 #### 修改密码
-https://blog.csdn.net/zcwforali/article/details/60597124
 
 #### 方法1： 用SET PASSWORD命令 
 首先登录MySQL。 
@@ -217,3 +213,7 @@ mysql> flush privileges;
 ```bash
 service mysqld restart
 ```
+
+> [mysql安装原文地址](https://www.cnblogs.com/julyme/p/5969626.html) <br>
+> [修改mysql密码原文地址](https://blog.csdn.net/zcwforali/article/details/60597124) <br>
+> [修改mysql权限](https://www.cnblogs.com/weifeng1463/p/7941625.html)
