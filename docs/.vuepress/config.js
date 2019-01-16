@@ -1,5 +1,5 @@
 module.exports = {
-	title: '技术文档',
+	title: '毒液文档',
 	description: '本站使用vuepress搭建',
 	themeConfig: {
 		// 添加导航栏
