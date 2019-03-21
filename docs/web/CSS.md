@@ -119,3 +119,8 @@ p::after {
 	background: linear-gradient(to right, transparent, #fff 55%);
 }
 ```
+
+## 点击穿透
+```css
+pointer-events:none;
+``` 

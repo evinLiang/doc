@@ -24,7 +24,8 @@ module.exports = {
 			{
 				text: '工具',
 				items: [
-          			{ text: 'git', link: '/tool/git' }
+          			{ text: 'git', link: '/tool/git' },
+          			{ text: '其他', link: '/tool/other' }
         		]
 			},
 			{

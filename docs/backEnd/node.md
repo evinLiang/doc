@@ -154,3 +154,81 @@ http://localhost:3000/users?id=2
 ```
 * [npm](https://www.npmjs.com/package/json-server)
 * [详细例子 express+json-server](https://github.com/evinLiang/code_api)
+
+## node express获取微信的openid
+#### 安装express
+```Bash
+#Express 应用程序生成器
+npm install express-generator -g
+#新建express 项目
+express --view=pug myapp
+#进入目录并且安装依赖
+cd myapp & cnpm install
+#启动
+npm start
+```
+#### 安装request模块
+```Bash
+cnpm i request --save
+```
+
+#### routes/index.js 路由文件修改
+```js
+var express = require('express');
+var router = express.Router();
+var request = require('request');
+
+//下面是微信测试号的账号信息
+var AppID = 'wxe89cb7081ce1fc3b';
+var AppSecret = 'e93c8c192bee2ca6ea0f54a37c4f7c47';
+
+/* GET home page. */
+router.get('/', function (req, res, next) {
+  var router = 'get_wx_access_token';
+  var return_uri = 'http://testwechat.com/' + router;
+  var scope = 'snsapi_userinfo';
+  res.redirect('https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + AppID + '&redirect_uri=' + return_uri + '&response_type=code&scope=' + scope + '&state=STATE#wechat_redirect');
+  //res.render('index', { title: 'Express' });
+});
+
+router.get('/get_wx_access_token', function (req, res, next) {
+  var code = req.query.code;
+  console.log(code)
+  request.get(
+    {
+      url: 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' + AppID + '&secret=' + AppSecret + '&code=' + code + '&grant_type=authorization_code',
+    }, function (error, response, body) {
+      if (response.statusCode == 200) {
+
+        // 第三步：拉取用户信息(需scope为 snsapi_userinfo)
+        //console.log(JSON.parse(body));
+        var data = JSON.parse(body);
+        var access_token = data.access_token;
+        var openid = data.openid;
+        console.log(data);
+        request.get(
+          {
+            url: 'https://api.weixin.qq.com/sns/userinfo?access_token=' + access_token + '&openid=' + openid + '&lang=zh_CN',
+          }, function (error, response, body) {
+            if (response.statusCode == 200) {
+              var userinfo = JSON.parse(body);
+              console.log(userinfo);
+              // console.log(userinfo.nickname);
+              // console.log(userinfo.headimgurl);
+              // console.log(userinfo.city);
+              // res.send("\
+              //     <h1>"+userinfo.nickname+" 的个人信息</h1>\
+              //     <p><img src='"+userinfo.headimgurl+"' /></p>\
+              //     <p>"+userinfo.city+"，"+userinfo.province+"，"+userinfo.country+"</p>\
+              // ");
+              res.render('index', { userinfo: userinfo });
+            }
+          })
+      }
+    }
+  )
+});
+
+module.exports = router;
+
+```

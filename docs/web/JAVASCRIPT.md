@@ -509,3 +509,14 @@ console.log(isMobile.test('13800138000'));	//true
 var isEmail = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;	//验证邮箱
 console.log(isEmail.test('163@163.cn'));	//true
 ```
+
+## 微信键盘收回事件处理底部空白问题
+``` js
+$('.input-panel .input,.cell-select').on('blur',function(){
+    setTimeout(function(){
+        window.scrollTo(0, document.documentElement.clientHeight);
+    },100)
+})
+```
+
+

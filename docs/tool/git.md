@@ -122,3 +122,28 @@ git merge --no-ff develop
 Git分支管理策略 <http://www.ruanyifeng.com/blog/2012/07/git.html> <br>
 git-flow图解 <http://blog.csdn.net/liubo2012/article/details/8515065> <br>
 Git 版本管理工具 <http://blog.csdn.net/ithomer/article/details/7527877>
+
+## git其他基本操作
+1. 更新git remote 中所有的远程
+```Bash
+git fetch
+```
+2. 查看git所有远程远程
+```Bash
+git branch -a
+```
+3. 删除远程分支
+```Bash
+git push origin --delete origin/dev(远程分支名)
+```
+4. 删除本地分支
+```Bash
+# 需要切换到其他分支
+git branch -D dev(本地分支名)
+```
+5. 暂存分支，拉取代码
+```Bash
+git stash 
+git pull origin master 
+git stash pop
+```
