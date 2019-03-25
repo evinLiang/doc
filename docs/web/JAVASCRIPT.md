@@ -519,4 +519,9 @@ $('.input-panel .input,.cell-select').on('blur',function(){
 })
 ```
 
+## 页面禁止复制和右键
+```js
+document.oncontextmenu = new Function("event.returnValue=false");
+document.onselectstart = new Function("event.returnValue=false");
+```
 
