@@ -124,3 +124,15 @@ p::after {
 ```css
 pointer-events:none;
 ``` 
+
+## flex实现超出可视区域水平滚动
+父元素设置
+```css
+display:flex;
+overflow-x: auto;
+overflow-y: hidden;
+```
+子元素设置
+```css
+flex-shrink: 0;
+```

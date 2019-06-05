@@ -525,3 +525,41 @@ document.oncontextmenu = new Function("event.returnValue=false");
 document.onselectstart = new Function("event.returnValue=false");
 ```
 
+## json和js对象转换
+`JSON.stringify()` 方法是将一个JavaScript值(对象或者数组)转换为一个 JSON字符串，如果指定了replacer是一个函数，则可以选择性的替换值，或者如果指定了replacer是一个数组，可选择性的仅包含数组指定的属性。
+```js
+JSON.stringify(value)
+JSON.stringify(value[, replacer [, space]])
+```
+`JSON.parse()` 方法是：在接收服务器数据时一般是字符串。我们可以使用 JSON.parse() 方法将数据转换为 JavaScript 对象。
+```js
+JSON.parse(text)
+JSON.parse(text[, reviver])
+```
+
+## async/await处理异步回调
+注：一般情况要与`promise`一起使用
+栗子：
+```js
+//ajax请求栗子
+ajaxFun() {
+    return new Promise((resolve, reject) => {
+        $.ajax({ ... })
+        .done(function(res) {
+            resolve(res);
+        })
+        .fail(function(err) {
+            reject(err);
+        })
+    })
+}
+
+// async/await 注：可以用try/catch 处理报错
+async getData() {
+    try {
+        const data = await ajaxFun();   //data就是Promise返回的resolve
+    } catch (err) {
+        console.log(err);   //err就是报错返回的err
+    }
+}
+```
