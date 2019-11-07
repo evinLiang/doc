@@ -636,3 +636,142 @@ ss1 = s1.split('');  //["h", "e", "l", "l", "o", "w", "o", "r", "l", "d"]
 </body>
 </html>
 ```
+
+## 删除数组的重复值
+```js
+var fruits = ['banana', 'apple', 'orange', 'watermelon', 'apple', 'orange', 'apple'];
+// 第一种方法
+var uniqueFruits = Array.from(new Set(fruits));
+console.log(uniqueFruits);  // ["banana", "apple", "orange", "watermelon"]
+// 第二种方式
+var uniqueFruits2 = [...new Set(fruits)];
+console.log(uniqueFruits2);  // ["banana", "apple", "orange", "watermelon"]
+```
+
+## 替换数组中的特定值
+#### 有时在创建代码时需要替换数组中的特定值，有一种很好的简短方法可以做到这一点，咱们可以使用<code>.splice(start、value to remove、valueToAdd)</code>，这些参数指定咱们希望从哪里开始修改、修改多少个值和替换新值。
+```js
+var userName = ['小常0', '小常1', '小常2', '小常3', '小常4'];
+userName.splice(0, 2, '位置更换1', '位置更换2')
+console.log(userName) // ["位置更换1", "位置更换2", "小常2", "小常3", "小常4"]
+```
+
+## Array.from 达到 .map 的效果
+#### 咱们都知道 <code>.map() </code>方法，<code>.from()</code> 方法也可以用来获得类似的效果且代码也很简洁。
+```js
+var friends = [
+    { name: '张三', age: 20 },
+    { name: '黄五', age: 22 },
+    { name: '李四', age: 30 },
+    { name: '梁一', age: 18 },
+    { name: '郑二', age: 15 }
+]
+// .from() 方法
+var friendsName = Array.from(friends, ({name}) => name) // {name} 结构赋值
+console.log(friendsName)  //["张三", "黄五", "李四", "梁一", "郑二"]
+// .map()方法
+var friendsNameMap = friends.map(({name}) => name)
+console.log(friendsNameMap) //["张三", "黄五", "李四", "梁一", "郑二"]
+```
+
+## 置空数组
+#### 有时候我们需要清空数组，一个快捷的方法就是直接让数组的 length 属性为 0，就可以清空数组了。
+```js
+var friendsT = [
+    { name: '张三', age: 20 },
+    { name: '黄五', age: 22 },
+    { name: '李四', age: 30 },
+    { name: '梁一', age: 18 },
+    { name: '郑二', age: 15 }
+]
+friendsT.length = 0;
+console.log(friendsT);  // []
+```
+
+## 将数组转换为对象
+#### 有时候，出于某种目的，需要将数组转化成对象，一个简单快速的方法是就使用展开运算符号(...):
+```js
+var friendsArr = ['张三', '李四', '黄五'];
+var friendsStr = {...friendsArr};
+console.log(friendsStr) //{0: "张三", 1: "李四", 2: "黄五"}
+```
+
+## 用数据填充数组
+#### 在某些情况下，当咱们创建一个数组并希望用一些数据来填充它，这时 .fill()方法可以帮助咱们。
+```js
+var newArray = new Array(10).fill('1'); 
+console.log(newArray);  // ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1"]
+```
+
+## 数组合并
+#### 使用展开操作符，也可以将多个数组合并起来。
+```js
+var fruitsArr = ['apple', 'banana', 'orange']
+var meatArr = ['poultry', 'beef', 'fish']
+var vegetablesArr = ['potato', 'tomato', 'cucumber']
+var food = [...fruitsArr, ...meatArr, ...vegetablesArr]
+console.log(food) // ["apple", "banana", "orange", "poultry", "beef", "fish", "potato", "tomato", "cucumber"]
+```
+
+## 判断数组是否有某个值
+#### 可以用indexOf和includes
+```js
+var numList = [10, 20, 30]
+var numIndex1 = 20
+var numIndex2 = 40
+console.log(numList.includes(numIndex1))  // true
+console.log(numList.includes(numIndex2))  // false
+console.log(numList.indexOf(numIndex1))  // 1 表示在数组的某一个位置
+console.log(numList.indexOf(numIndex2))  // -1 表示不在
+```
+
+## 求两个数组的交集
+#### 求两个数组的交集在面试中也是有一定难度的正点，为了找到两个数组的交集，首先使用上面的方法确保所检查数组中的值不重复，接着使用.filter 方法和.includes方法。如下所示：
+```js
+var numOne = [0,2,4,6,8,8]
+var numTwo = [1,2,3,4,5,6]
+var duplicatedValues = [...new Set(numOne)].filter(item => numTwo.includes(item));
+console.log(duplicatedValues) //  [2, 4, 6]
+```
+
+## 从数组中删除虚值
+#### 在 JS 中，虚值有 false, 0，''， null, NaN, undefined。咱们可以 .filter() 方法来过滤这些虚值。
+```js
+var mixedArr = [0, 'blue', '', NaN, 9, true, undefined, 'white', false]
+var trueArr = mixedArr.filter(Boolean)
+console.log(trueArr)  // ["blue", 9, true, "white"]
+```
+
+## 从数组中获取随机值
+#### 有时我们需要从数组中随机选择一个值。一种方便的方法是可以根据数组长度获得一个随机索引，如下所示：
+```js
+var names = ['随机1', '随机2', '随机3', '随机4','随机5']
+var randomName = names[(Math.floor(Math.random() * (names.length)))]
+console.log(randomName) // 随机4
+```
+
+## 反转数组
+#### 现在，咱们需要反转数组时，没有必要通过复杂的循环和函数来创建它，数组的 reverse 方法就可以做了
+```js
+var namesj = ['随机1', '随机2', '随机3', '随机4','随机5']
+var reverseColors = namesj.reverse()
+console.log(reverseColors)  //["随机5", "随机4", "随机3", "随机2", "随机1"]
+```
+
+## indexOf和lastIndexOf() 方法
+#### indexOf 是查某个指定的字符串在字符串首次出现的位置（索引值） （也就是从前往后查）lastIndexOf 是从右向左查某个指定的字符串在字符串中最后一次出现的位置（也就是从后往前查）
+```js
+var nums = [1,5,1,1,5,19,12,63,5,10]
+var lastIndex = nums.lastIndexOf(5)
+var firstIndex = nums.indexOf(5)
+console.log(lastIndex)  // 8
+console.log(firstIndex) // 1
+```
+
+## 对数组中的所有值求和
+#### JS 面试中也经常用 reduce 方法来巧妙的解决问题
+```js
+var numList2 = [1,5,6,7]
+var sum = numList2.reduce((x, y)=> x + y)
+console.log(sum)  // 19
+```
