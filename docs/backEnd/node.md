@@ -232,3 +232,155 @@ router.get('/get_wx_access_token', function (req, res, next) {
 module.exports = router;
 
 ```
+
+## parcel打包
+::: tip
+Parcel 是 Web 应用打包工具，适用于经验不同的开发者。它利用多核处理提供了极快的速度，并且不需要任何配置。
+[parcel官网](https://parceljs.org)
+:::
+#### 全局安装parcel
+```Bash
+npm install -g parcel-bundler	// npm
+yarn global add parcel-bundler	// yarn
+```
+在你正在使用的项目目录下创建一个 package.json 文件：
+```Bash
+npm init -y
+```
+Parcel 可以使用任何类型的文件作为入口，但是最好还是使用 HTML 或 JavaScript 文件。如果在 HTML 中使用相对路径引入主要的 JavaScript 文件，Parcel 也将会对它进行处理将其替换为相对于输出文件的 URL 地址。
+
+接下来，创建一个 <code>index.html</code> 和 <code>index.js</code> 文件。
+```Html
+<html>
+  <body>
+    <script src="./index.js"></script>
+  </body>
+</html>
+```
+```Js
+console.log('hello world')
+```
+Parcel 内置了一个当你改变文件时能够自动重新构建应用的开发服务器，而且为了实现快速开发，该开发服务器支持热模块替换。只需要在入口文件指出：
+```Bash
+parcel watch index.html
+```
+你也能使用createapp.dev在浏览器中创建一个 Parcel 项目。选择你需要的特性列如 React， Vue，Typescript 和 CSS，然后你将会看到项目实时生成。你能通过这个工具去学习如何怎么建立一个新的项目并且你也能下载这个项目作为一个 zip 文件然后立即开始写代码。
+#### 多个文件入口
+假设你有超过一个的入口文件，比如是<code>index.html</code> and <code>about.html</code>，你有两种方式来打包：
+
+指定当前文件的名字：
+```Bash
+parcel index.html about.html
+```
+使用 tokens 并创建一个 glob：
+```Bash
+parcel ./**/*.html
+```
+注意: 假设你的文件目录结构如下:
+```Bash
+- folder-1
+-- index.html
+- folder-2
+-- index.html
+```
+打开 http://localhost:1234/folder-1/ 是不行的，反而你需要显式地指向文件 http://localhost:1234/folder-1/index.html。
+#### 生产模式构建
+当你准备在生产模式下创建，build 模式会关闭监听并且只建立一次。请查阅 Production 查看更多细节。
+
+添加 parcel 到你的项目
+有时全局安装 Parcel 是不可能的。举个例子，假如你正在构建其他人的 build agent 或者你想使用 CI 以编程的方式构建你的项目。如果这样，你可以将 Parcel 作为本地包安装并运行。
+
+Yarn 方式安装：
+```Bash
+yarn add parcel-bundler --dev
+```
+NPM 方式安装：
+```Bash
+npm install parcel-bundler --save-dev
+```
+接着，通过修改你的package.json来添加这些任务脚本
+```Bash
+{
+  "scripts": {
+    "dev": "parcel <your entry file>",
+    "build": "parcel build <your entry file>"
+  }
+}
+```
+然后，你就能运行它了：
+
+以开发模式运行
+```Bash
+yarn dev
+```
+或
+```Bash
+npm run dev
+```
+以生成模式运行
+```Bash
+yarn build
+```
+或
+```Bash
+npm run build
+```
+
+#### parcel搭建react
+第一步：创建一个npm项目,并且建npm默认文件
+```Bash
+mkdir react-parcel
+cd react-parcel
+npm init -y
+```
+第二步：添加 React、Babel 和 Parcel 的依赖。
+```Bash
+npm install --save react
+npm install --save react-dom
+npm install --save-dev babel-preset-react
+npm install --save-dev babel-preset-env
+npm install --save-dev parcel-bundler
+npm install --save-dev @babel-core
+```
+第三步：创建 .babelrc 文件，这个文件告诉 Parcel 我们使用了 ES6 和 React JSX。
+```Bash
+{
+  "presets": ["env", "react"]
+}
+```
+第四步：创建 React 项目，它仅仅包含两个文件。
+index.js
+```Js
+import React from "react";
+import ReactDOM from "react-dom";
+class App extends React.Component {
+	render() {
+		return <div>halo</div>
+	}
+}
+ReactDOM.render(<App />, document.getElementById('root'));
+```
+index.html
+```Html
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>React starter app</title>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script src="./index.js"></script>
+    </body>
+</html>
+```
+第五步：在 package.json 中添加 script 脚本，用于启动我们的应用。
+```Json
+"scripts": {
+  "start": "parcel index.html",
+},
+```
+第六步：启动应用
+```Bash
+npm start
+```
+确保你的 node 版本大于等于 8.0.0，之后可以在浏览器中输入 http://localhost:1234 看到应用的内容。

@@ -19,7 +19,7 @@ CSS只需添加以下代码
 .clearfix { *zoom:1; }
 ```
 
-## css自适应rem
+## css自适应rem(第一种字体百分比)
 ::: tip
 设计稿按照750px；那么1rem = 10px = 设计稿20px
 :::
@@ -74,6 +74,42 @@ CSS只需添加以下代码
 		<div id="rem">rem</div>
 		<div id="px">px</div>
 	</body>
+</html>
+```
+## css自适应rem(第二种字体vw)
+::: tip
+html设置css：font-size: calc(100vw / 7.5); 低版本浏览器处理：document.documentElement.style.fontSize = window.innerWidth / 7.5 + 'px'
+:::
+``` html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		html {
+			font-size: calc(100vw / 7.5);
+			/*替换页面中的单位，把所有的px单位替换成rem，除以100，比如前面的80px，就是0.8rem*/
+		}
+
+		#app {
+			width: 1rem;
+			height: 1rem;
+			border: 1px solid red;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="app"></div>
+	<script>
+		// 低版本浏览器处理
+		document.documentElement.style.fontSize = window.innerWidth / 7.5 + 'px'
+	</script>
+</body>
+
 </html>
 ```
 ## CSS控制文字，超出部分显示省略号

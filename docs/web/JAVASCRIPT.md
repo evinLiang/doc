@@ -518,6 +518,25 @@ $('.input-panel .input,.cell-select').on('blur',function(){
     },100)
 })
 ```
+#### 终极解法
+```js
+// 微信键盘收回事件处理底部空白问题
+$('.entered-form .weui-input, .entered-form .weui-select').on('blur', function () {
+    var ua = window.navigator.userAgent;
+    var app = window.navigator.appVersion;
+    var speed = 1;
+    var currentPosition;
+    if (!!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+        setTimeout(function () {
+        currentPosition = document.documentElement.scrollTop || document.body.scrollTop;
+        currentPosition -= speed;
+        window.scrollTo(0, currentPosition);//页面向上滚动
+        currentPosition += speed;
+        window.scrollTo(0, currentPosition);//页面向下滚动
+        }, 100)
+    }
+})
+```
 
 ## 页面禁止复制和右键
 ```js
@@ -593,4 +612,27 @@ var s = "abc,abcd,aaa";
 ss = s.split(",");// 在每个逗号(,)处进行分解  ["abc", "abcd", "aaa"]
 var s1 = "helloworld";
 ss1 = s1.split('');  //["h", "e", "l", "l", "o", "w", "o", "r", "l", "d"]
+```
+
+## 部分安卓机window.localhost.href无效
+#### 在后面加个时间戳或者随机数
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<button id="reload">刷新本页</button>
+	<script src="https://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+	<script>
+		$(function(){
+			$("#reload").click(function(event) {
+				window.location.href=window.location.href+'?time'+(new Date().getTime());
+			});
+		})
+	</script>
+</body>
+</html>
 ```
