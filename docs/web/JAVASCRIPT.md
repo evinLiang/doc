@@ -775,3 +775,53 @@ var numList2 = [1,5,6,7]
 var sum = numList2.reduce((x, y)=> x + y)
 console.log(sum)  // 19
 ```
+
+## 设置一个月的某一天:
+#### setDate() 是设置第几天
+```js
+var theDate = new Date(); // 例如：2020-1-8
+theDate.setDate(1);
+console.log(theDate); // 2020-1-1
+```
+
+## vue params传参
+#### params传参只能用name来引入路由
+```js
+this.$router.push({
+    name: 'detail',
+    params: {
+        id: id
+    }
+})
+```
+## vue 监听路由变化
+```js
+watch: {
+  '$route': '函数'
+}
+```
+
+## 滚动底部加载
+```js
+var hasNewData = true;  // 控制是否可以执行加载
+$(document).scroll(function () {
+    var scroH = $(document).scrollTop();  //滚动高度
+    var contentH = $(document).height();  //内容高度
+    var viewH = $(window).height();  //可见高度 
+    if (scroH >= (contentH - viewH) && hasNewData) {  // 判断是否滚动条是否滚到底部，并且还有数据
+        wu.showLoading();
+        setTimeout(function () {
+        hasNewData = false; // 把hasNewData改成false，防止多次请求
+        wu.hideToast(); //隐藏loading
+        //ajax... 请求数据
+        // 没有数据,把hasNewData改成false
+        hasNewData = false;
+        // 还有数据,把hasNewData改成true,滚动到底部可以再次请求
+        hasNewData = true;
+        wu.showToast({
+            title: '数据更新成功'
+        })
+        }, 2000)
+    }
+    })
+```

@@ -10,7 +10,7 @@ module.exports = {
 			{
 				text: '前端',
 				items: [
-          			//{ text: 'HTML', link: '/web/HTML' },
+          			{ text: 'HTML', link: '/web/HTML' },
           			{ text: 'CSS', link: '/web/CSS' },
 					{ text: 'JAVASCRIPT', link: '/web/JAVASCRIPT' }
         		]
