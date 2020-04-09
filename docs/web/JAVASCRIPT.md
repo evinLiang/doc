@@ -825,3 +825,172 @@ $(document).scroll(function () {
     }
     })
 ```
+
+## canvas合并图片
+
+### 直接看例子和效果
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0px;
+      padding: 0px;
+      /* box-sizing: border-box; */
+    }
+
+    #canvas {
+      display: none;
+      border-radius: 5px;
+    }
+    #imgContent {
+      position: fixed;
+      z-index: 10;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas"></canvas>
+  <div id="imgContent"></div>
+  <script>
+    var canvas = document.getElementById('canvas')
+    var ctx = canvas.getContext('2d')
+
+    // 设置画布大小
+    canvas.width = window.innerWidth * 0.8;
+    canvas.height = window.innerWidth * 0.8;
+
+    let mulitImg = [
+        'https://picwx.suofeiya.com.cn/applet_images/redpacket_applet/images/real_prize.png',
+        'https://picwx.suofeiya.com.cn/applet_images/redpacket_applet/images/img_11.png'
+    ];
+    let promiseAll = [], img = [], imgTotal = mulitImg.length;
+    for(let i = 0 ; i < imgTotal ; i++){
+        promiseAll[i] = new Promise((resolve, reject)=>{
+            img[i] = new Image()
+            img[i].crossOrigin = 'anonymous'
+            img[i].src = mulitImg[i]
+            img[i].onload = function(){
+                  //第i张加载完成
+                  resolve(img[i])
+            }
+        })
+    }
+    Promise.all(promiseAll).then((img)=>{
+        //全部加载完成
+        ctx.drawImage(img[0], 0, 0, canvas.width, canvas.height)
+        smallImgLeft = (window.innerWidth * 0.8 - window.innerWidth*0.2) / 2
+        smallImgTop = (window.innerWidth * 0.8 - window.innerWidth*0.2) / 2
+        ctx.drawImage(img[1], smallImgLeft, 50, window.innerWidth*0.2, window.innerWidth*0.2)
+        // 设置字体
+        ctx.font = "18px bold 黑体";
+        // 设置颜色
+        ctx.fillStyle = "#ff0";
+        // 设置水平对齐方式
+        // ctx.textAlign = "center";
+        // 设置垂直对齐方式
+        ctx.textBaseline = "middle";
+        // 绘制文字（参数：要写的字，x坐标，y坐标）
+        ctx.fillText("中国女排", smallImgLeft, window.innerWidth*0.2+120);
+
+        var dataImg = new Image()
+        dataImg.src = canvas.toDataURL('image/png')
+        document.getElementById('imgContent').appendChild(dataImg) // 长按图片保存
+    }).catch((res)=>{
+      console.log(res)
+    })
+  </script>
+</body>
+
+</html>
+```
+
+### 效果
+![](https://vin668.oss-cn-hangzhou.aliyuncs.com/2.png)
+
+### 难点
+
+#### 往往图片是异步或者跨域加载的，所以图片要做跨域处理
+```js
+img.crossOrigin = 'anonymous'
+```
+#### 图片如果是异步加载，需要判断图片是否加载完，如果多张图片可以用到es6的promise的all
+参考：[https://npm.taobao.org/mirrors/node/v10.8.0/node-v10.8.0-linux-x64.tar.xz](https://npm.taobao.org/mirrors/node/v10.8.0/node-v10.8.0-linux-x64.tar.xz)
+
+单张图片（图片动态生成）
+```js
+ var img = new Image()
+ img.src = 'http://www.daqianduan.com/wp-content/uploads/2014/11/hs-xiu.jpg'
+ img.onload = function(){
+    // 加载完成 
+ }
+```
+单张图片（结合ES6 Promise）
+```js
+//js
+ new Promise((resolve, reject)=>{
+    let img = new Image()
+    img.src = 'http://www.daqianduan.com/wp-content/uploads/2014/11/hs-xiu.jpg'
+    img.onload = function(){
+       // 加载完成 
+       resolve(img)
+    }
+ }).then((img)=>{
+    //code
+ })
+```
+多张图片
+```js
+var img = [],  
+    flag = 0, 
+    mulitImg = [
+    'http://www.daqianduan.com/wp-content/uploads/2017/03/IMG_0119.jpg',
+    'http://www.daqianduan.com/wp-content/uploads/2017/01/1.jpg',
+    'http://www.daqianduan.com/wp-content/uploads/2015/11/jquery.jpg',
+    'http://www.daqianduan.com/wp-content/uploads/2015/10/maid.jpg'
+ ];
+ var imgTotal = mulitImg.length;
+ for(var i = 0 ; i < imgTotal ; i++){
+    img[i] = new Image()
+    img[i].src = mulitImg[i]
+    img[i].onload = function(){
+       //第i张图片加载完成
+       flag++
+       if( flag == imgTotal ){
+          //全部加载完成
+       }
+    }
+ }
+```
+多张图片（结合ES6 Promise.all()）
+```js
+let mulitImg = [
+     'http://www.daqianduan.com/wp-content/uploads/2017/03/IMG_0119.jpg',
+     'http://www.daqianduan.com/wp-content/uploads/2017/01/1.jpg',
+     'http://www.daqianduan.com/wp-content/uploads/2015/11/jquery.jpg',
+     'http://www.daqianduan.com/wp-content/uploads/2015/10/maid.jpg'
+ ];
+ let promiseAll = [], img = [], imgTotal = mulitImg.length;
+ for(let i = 0 ; i < imgTotal ; i++){
+     promiseAll[i] = new Promise((resolve, reject)=>{
+         img[i] = new Image()
+         img[i].src = mulitImg[i]
+         img[i].onload = function(){
+              //第i张加载完成
+              resolve(img[i])
+         }
+     })
+ }
+ Promise.all(promiseAll).then((img)=>{
+     //全部加载完成
+ })
+```
