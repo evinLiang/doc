@@ -1,7 +1,7 @@
 module.exports = {
 	title: '毒液文档',
 	description: '本站使用vuepress搭建',
-	base: 'doc',
+	base: '/',
 	themeConfig: {
 		// 添加导航栏
 		nav: [{
@@ -44,7 +44,7 @@ module.exports = {
 			{
 				text: 'github',
 				link: 'https://github.com/evinLiang'
-			},
+			}
 		]
 	},
 }
