@@ -10,32 +10,55 @@ module.exports = {
 			},
 			{
 				text: '前端',
-				items: [
-          			{ text: 'HTML', link: '/web/HTML' },
-          			{ text: 'CSS', link: '/web/CSS' },
-					{ text: 'JAVASCRIPT', link: '/web/JAVASCRIPT' }
-        		]
-			},
-			{
-				text: '后端',
-				items: [
-					{ text: 'node', link: '/backEnd/node' },
+				items: [{
+						text: 'HTML',
+						link: '/web/HTML'
+					},
+					{
+						text: 'CSS',
+						link: '/web/CSS'
+					},
+					{
+						text: 'JAVASCRIPT',
+						link: '/web/JAVASCRIPT'
+					},
+					{
+						text: 'Javascirpt深入系列',
+						link: '/web/Javascirpt深入系列'
+					}
 				]
 			},
 			{
+				text: '后端',
+				items: [{
+					text: 'node',
+					link: '/backEnd/node'
+				}, ]
+			},
+			{
 				text: '工具',
-				items: [
-          			{ text: 'git', link: '/tool/git' },
-          			{ text: '其他', link: '/tool/other' }
-        		]
+				items: [{
+						text: 'git',
+						link: '/tool/git'
+					},
+					{
+						text: '其他',
+						link: '/tool/other'
+					}
+				]
 			},
 			{
 				text: '服务器',
-				items: [
-          			{ text: 'nginx', link: '/server/nginx' },
-          			//{ text: 'linux', link: '/server/linux' },
-          			{ text: 'mysql', link: '/server/mysql' }
-        		]
+				items: [{
+						text: 'nginx',
+						link: '/server/nginx'
+					},
+					//{ text: 'linux', link: '/server/linux' },
+					{
+						text: 'mysql',
+						link: '/server/mysql'
+					}
+				]
 			},
 			{
 				text: '博客',
