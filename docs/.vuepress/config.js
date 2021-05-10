@@ -25,6 +25,10 @@ module.exports = {
 					{
 						text: 'Javascirpt深入系列',
 						link: '/web/Javascirpt深入系列'
+					},
+					{
+						text: 'vuejs系列',
+						link: '/web/vuejs系列'
 					}
 				]
 			},
