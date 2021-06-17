@@ -29,6 +29,10 @@ module.exports = {
 					{
 						text: 'vuejs系列',
 						link: '/web/vuejs系列'
+					},
+					{
+						text: 'react系列',
+						link: '/web/react系列'
 					}
 				]
 			},
